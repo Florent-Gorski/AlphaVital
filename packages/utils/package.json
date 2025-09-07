@@ -9,6 +9,7 @@
     "date-fns-tz": "^2.0.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.5.2",
     "typescript": "^5.3.3"
   }
 }

@@ -6,5 +6,8 @@
   "files": [
     "eslint",
     "tailwind"
-  ]
+  ],
+  "devDependencies": {
+    "@next/bundle-analyzer": "^15.5.2"
+  }
 }

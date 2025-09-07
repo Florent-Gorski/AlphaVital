@@ -1,17 +1,92 @@
-# Dépendances
+# ----------------------------
+# Node / Monorepo (Turborepo)
+# ----------------------------
 node_modules/
 packages/*/node_modules/
 packages/**/node_modules/
+.turbo/
 
-# Build
+# Ne pas ignorer les lockfiles (ils DOIVENT être commités)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ----------------------------
+# Builds & caches
+# ----------------------------
 dist/
 build/
-.next/
 .out/
+.next/
+.next/cache/
+.next/static/
+out/
+.eslintcache
+.vitest/
+coverage/
 
-# Env
+# Storybook
+storybook-static/
+
+# Vite
+*.tsbuildinfo
+
+# ----------------------------
+# Environnements (sécrets)
+# ----------------------------
 .env
-.env.local
+.env.*
+!.env.example
 packages/*/.env
+packages/*/.env.*
 packages/**/.env
-packages/*/.env.local
+packages/**/.env.*
+
+# Supabase local (si utilisé)
+supabase/.temp
+supabase/.branches
+
+# ----------------------------
+# Logs
+# ----------------------------
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ----------------------------
+# Plateformes & déploiement
+# ----------------------------
+.vercel/
+.netlify/
+firebase-debug.log
+.functions/
+
+# ----------------------------
+# IDE / OS
+# ----------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# ----------------------------
+# Tests / E2E
+# ----------------------------
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+
+# ----------------------------
+# Yarn Berry (si utilisé)
+# ----------------------------
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

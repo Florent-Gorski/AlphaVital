@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  displayName   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  locale        String   @default("fr")
+  tz            String   @default("Europe/Zurich")
+  heightCm      Int?
+  weightKg      Decimal? @db.Decimal(5,2)
+  birthDate     DateTime?
+  targetWeightKg Decimal? @db.Decimal(5,2)
+  primaryGoal   String?  // fat-loss, energy, muscle, health
+  timeAvailable String?  // 15-20, 25-30, 45-60, variable
+  
+  // Relations
+  sleepLogs     SleepLog[]
+  hormoneTests  HormoneTest[]
+  workouts      WorkoutSession[]
+  habits        Habit[]
+  journal       JournalEntry[]
+  badges        Badge[]
+  
+  @@map("users")
+}
+
+model SleepLog {
+  id        String   @id @default(cuid())
+  userId    String
+  date      DateTime // jour local normalisé en UTC 00:00
+  bedtime   DateTime?
+  wakeTime  DateTime?
+  durationM Int?
+  quality   Int?     // 1..5 auto‑évaluée
+  notes     String?
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, date])
+  @@map("sleep_logs")
+}
+
+model HormoneTest {
+  id        String   @id @default(cuid())
+  userId    String
+  createdAt DateTime @default(now())
+  scores    Json     // { testoOestro: number, ghrelineLeptine: number, cortisolMelatonine: number, insulineGlucagon: number }
+  answers   Json     // réponses brutes du questionnaire
+  summary   String   // texte généré (reco personnalisées)
+  priorityOrder Json // ordre de priorité des duos
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("hormone_tests")
+}
+
+model WorkoutSession {
+  id           String   @id @default(cuid())
+  userId       String
+  date         DateTime @default(now())
+  pyramidTop   Int      // ex: 10
+  durationMin  Int
+  afterburnH   Int      // ex: 24..48
+  perceivedEff Int?     // RPE 1..10
+  totalReps    Int
+  notes        String?
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sets         WorkoutSet[]
+  
+  @@map("workout_sessions")
+}
+
+model WorkoutSet {
+  id        String   @id @default(cuid())
+  sessionId String
+  order     Int      // 1..N
+  exercise  Exercise // SWING | SQUAT | PRESS | PUSHUP
+  reps      Int
+  weightKg  Decimal? @db.Decimal(5,2)
+  
+  session   WorkoutSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  @@map("workout_sets")
+}
+
+enum Exercise { 
+  SWING 
+  SQUAT 
+  PRESS 
+  PUSHUP 
+}
+
+model Habit {
+  id        String   @id @default(cuid())
+  userId    String
+  key       String   // ex: "no_blue_light_after_21h"
+  enabled   Boolean  @default(true)
+  progress  Json?    // données de progression
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, key])
+  @@map("habits")
+}
+
+model JournalEntry {
+  id        String   @id @default(cuid())
+  userId    String
+  createdAt DateTime @default(now())
+  mood      Int?     // 1..5
+  energy    Int?     // 1..5
+  text      String?
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("journal_entries")
+}
+
+model Badge {
+  id        String   @id @default(cuid())
+  userId    String
+  key       String   // ex: "sleep_streak_7", "hirt_3_in_week"
+  acquiredAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, key])
+  @@map("badges")
+}

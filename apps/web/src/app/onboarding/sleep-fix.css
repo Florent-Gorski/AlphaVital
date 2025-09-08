@@ -1,13 +1,77 @@
-/* Anti-overlay & clickability fixes for sleep section */
-#sleep-config, .sleep-card {
+/* AlphaVital – Sleep section interaction fixes
+   Scope this file to the sleep configurator to guarantee clickability
+   without breaking global modals/toasts.
+   Import in the page that renders the sleep UI (onboarding).
+*/
+
+/* 1) Put the sleep block above potential translucent overlays */
+#sleep-config,
+.sleep-card,
+.sleep-section {
   position: relative;
-  z-index: 10;
+  z-index: 999;         /* higher than common overlays */
+  pointer-events: auto; /* allow interactions inside */
+}
+
+/* 2) Ensure all interactive descendants accept pointer events */
+#sleep-config *,
+.sleep-card *,
+.sleep-section * {
   pointer-events: auto;
 }
-.sleep-card * {
+
+/* 3) Time input: guarantee editability and text selection */
+#sleep-config input[type="time"],
+.sleep-card input[type="time"],
+.sleep-section input[type="time"] {
+  pointer-events: auto;
+  -webkit-user-select: text;
+  user-select: text;
+  /* Optional: larger hit area for touch */
+  min-height: 40px;
+}
+
+/* 4) Slider: make sure the whole track is interactive */
+#sleep-config .SliderRoot,
+.sleep-card .SliderRoot,
+.sleep-section .SliderRoot,
+#sleep-config .slider,
+.sleep-card .slider,
+.sleep-section .slider {
+  pointer-events: auto;
+  min-height: 28px;     /* comfortable hit area */
+  display: block;
+}
+
+/* Some slider libs nest handles/tracks with their own pointer-events */
+#sleep-config .SliderRoot *,
+.sleep-card .SliderRoot *,
+.sleep-section .SliderRoot *,
+#sleep-config .slider *,
+.sleep-card .slider *,
+.sleep-section .slider * {
   pointer-events: auto;
 }
-/* In case a global overlay sits above */
-[data-overlay], .blocking-layer, [data-dialog], [data-toast-container] {
-  pointer-events: none;
+
+/* 5) Optional visual affordance for the slider handle */
+#sleep-config .slider-handle,
+.sleep-card .slider-handle,
+.sleep-section .slider-handle {
+  outline: none;
 }
+
+/* 6) Do NOT globally disable overlays; we avoid breaking dialogs.
+   If you still observe a blocker, you can uncomment the block below to
+   disable pointer-events on *only those* overlays that are siblings of
+   the sleep section.
+*/
+/*
+.sleep-card ~ [data-overlay],
+.sleep-card ~ .blocking-layer,
+.sleep-section ~ [data-overlay],
+.sleep-section ~ .blocking-layer,
+#sleep-config ~ [data-overlay],
+#sleep-config ~ .blocking-layer {
+  pointer-events: none !important;
+}
+*/

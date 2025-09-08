@@ -1,26 +1,16 @@
 'use client';
 
+import './sleep-fix.css';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { 
-  Button, 
-  Card, 
-  CardContent, 
-  CardHeader, 
-  CardTitle, 
-  Input, 
-  Label,
-  ToggleGroup,
-  ToggleGroupItem,
-  Slider,
-  Checkbox,
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage
-} from '@alphavital/ui';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Slider } from '@/components/ui/slider';
+import { Checkbox } from '@/components/ui/checkbox';
 import { ArrowRight, User, Target, Clock, Moon, Thermometer } from 'lucide-react';
 import Link from 'next/link';
 import { OnboardingSchema, OnboardingData, defaultOnboardingValues } from '@/lib/schemas';

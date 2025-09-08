@@ -13,7 +13,7 @@ export default function HomePage() {
               Transformez votre corps après 40 ans avec la méthode{' '}
               <span className="text-gradient">AlphaVital</span>
             </h1>
-            <p className="lead mb-8 max-w-2xl mx-auto text-white/95 drop-shadow-md">
+            <p className="lead mb-8 max-w-2xl mx-auto !text-white drop-shadow-lg">
               Perdez du gras durablement grâce à notre approche scientifique combinant 
               sommeil optimisé, équilibre hormonal et entraînement HIRT.
             </p>

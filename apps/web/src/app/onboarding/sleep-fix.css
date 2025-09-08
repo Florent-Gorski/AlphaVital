@@ -1,0 +1,13 @@
+/* Anti-overlay & clickability fixes for sleep section */
+#sleep-config, .sleep-card {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
+.sleep-card * {
+  pointer-events: auto;
+}
+/* In case a global overlay sits above */
+[data-overlay], .blocking-layer, [data-dialog], [data-toast-container] {
+  pointer-events: none;
+}

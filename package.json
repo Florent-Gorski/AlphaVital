@@ -2,7 +2,6 @@
   "name": "alphavital-monorepo",
   "private": true,
   "version": "0.0.0",
-  "packageManager": "npm@10.8.1",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -19,8 +18,9 @@
     "@prisma/client": "^5.7.1"
   },
   "devDependencies": {
-    "turbo": "^1.10.16",
     "@turbo/gen": "^1.10.16",
-    "prisma": "^5.7.1"
-  }
+    "prisma": "^5.7.1",
+    "turbo": "^1.10.16"
+  },
+  "packageManager": "npm@10.8.1"
 }

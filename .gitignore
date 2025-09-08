@@ -5,7 +5,7 @@ node_modules/
 packages/*/node_modules/
 packages/**/node_modules/
 .turbo/
-
+.next
 # Ne pas ignorer les lockfiles (ils DOIVENT être commités)
 # package-lock.json
 # yarn.lock

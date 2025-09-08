@@ -1,0 +1,13 @@
+/* Anti-overlay rules for the sleep configurator */
+.blocking-layer,
+[data-overlay],
+[data-dialog],
+[data-toast-container] {
+  pointer-events: none;
+}
+
+#sleep-config {
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+}

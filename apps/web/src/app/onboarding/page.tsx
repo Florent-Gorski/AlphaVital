@@ -307,7 +307,9 @@ export default function OnboardingPage() {
                           <Input
                             type="time"
                             step={300}
-                            {...field}
+                            className="pointer-events-auto"
+                            value={field.value}
+                            onChange={field.onChange}
                           />
                         </FormControl>
                         <FormMessage />
@@ -324,7 +326,7 @@ export default function OnboardingPage() {
                         <FormControl>
                           <div className="space-y-3">
                             <div className="flex items-center gap-3">
-                              <Slider
+                              <Slider className="pointer-events-auto"
                                 min={360}
                                 max={540}
                                 step={15}

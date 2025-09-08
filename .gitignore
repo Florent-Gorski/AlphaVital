@@ -90,3 +90,8 @@ test-results/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Next.js build artifacts
+**/.next/
+**/out/
+**/.vercel/
